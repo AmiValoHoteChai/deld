@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Logic Design Study Tracker</title>
+    <style>
+        :root {
+            --bg-color: #f4f4f9;
+            --card-bg: #ffffff;
+            --text-color: #333;
+            --accent-color: #2563eb;
+            --success-color: #10b981;
+            --border-radius: 12px;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+
+        .progress-container {
+            background-color: #e5e7eb;
+            border-radius: 20px;
+            height: 20px;
+            width: 100%;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background-color: var(--success-color);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .stats {
+            text-align: center;
+            font-weight: bold;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .clo-section {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+
+        .clo-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .clo-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #1f2937;
+        }
+
+        .clo-marks {
+            background-color: #eff6ff;
+            color: var(--accent-color);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .topic-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .topic-item {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .checkbox-wrapper {
+            margin-right: 12px;
+            margin-top: 4px;
+        }
+
+        input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: var(--success-color);
+        }
+
+        .topic-content {
+            flex: 1;
+        }
+
+        .topic-name {
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .sub-topics {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 4px;
+            padding-left: 2px;
+        }
+
+        .resource-note {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #fff3cd;
+            border-radius: var(--border-radius);
+            color: #856404;
+        }
+
+        /* Strikethrough for completed items */
+        input[type="checkbox"]:checked + .topic-content .topic-name {
+            text-decoration: line-through;
+            color: #9ca3af;
+        }
+        
+        input[type="checkbox"]:checked + .topic-content .sub-topics {
+            color: #d1d5db;
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .clo-section { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Study Tracker</h1>
+        <p>Digital Logic Design Exam Prep</p>
+    </header>
+
+    <div class="progress-section">
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div class="stats" id="statsText">0% Completed</div>
+    </div>
+
+    <div class="clo-section">
+        <div class="clo-header">
+            <span class="clo-title">CLO 2: Boolean & Simplification</span>
+            <span class="clo-marks">10 Marks</span>
+        </div>
+        <ul class="topic-list">
+            <li class="topic-item">
+                <div class="checkbox-wrapper"><input type="checkbox" id="t1" onchange="updateProgress()"></div>
+                <div class="topic-content">
+                    <label for="t1" class="topic-name">K-Map Simplification</label>
+                </div>
+            </li>
+            <li class="topic-item">
+                <div class="checkbox-wrapper"><input type="checkbox" id="t2" onchange="updateProgress()"></div>
+                <div class="topic-content">
+                    <label for="t2" class="topic-name">Express in SOP Form</label>
+                    <div class="sub-topics">Sum of Products</div>
+                </div>
+            </li>
+            <li class="topic-item">
+                <div class="checkbox-wrapper"><input type="checkbox" id="t3" onchange="updateProgress()"></div>
+                <div class="topic-content">
+                    <label for="t3" class="topic-name">Express in POS Form</label>
+                    <div class="sub-topics">Product of Sums</div>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="clo-section">
+        <div class="clo-header">
+            <span class="clo-title">CLO 3: Combinational Circuits</span>
+            <span class="clo-marks">15 Marks</span>
+        </div>
+        <ul class="topic-list">
+            <li class="topic-item">
+                <div class="checkbox-wrapper"><input type="checkbox" id="t4" onchange="updateProgress()"></div>
+                <div class="topic-content">
+                    <label for="t4" class="topic-name">Encoders</label>
+                    <div class="sub-topics">Construction (4 to 2, 8 to 3, 16 to 4), Octal/Hexa to Binary</div>
+                </div>
+            </li>
+            <li class="topic-item">
+                <div class="checkbox-wrapper"><input type="checkbox" id="t5" onchange="updateProgress()"></div>
+                <div class="topic-content">
+                    <label for="t5" class="topic-name">Decoders</label>
+                    <div class="sub-topics">Construction, Circuit Implementation, Larger Decoders</div>
+                </div>
+            </li>
+            <li class="topic-item">
+                <div class="checkbox-wrapper"><input type="checkbox" id="t6" onchange="updateProgress()"></div>
+                <div class="topic-content">
+                    <label for="t6" class="topic-name">Multiplexers (MUX)</label>
+                    <div class="sub-topics">Construction, Circuit Implementation, Larger MUX</div>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="clo-section">
+        <div class="clo-header">
+            <span class="clo-title">CLO 4: Sequential Circuits</span>
+            <span class="clo-marks">15 Marks</span>
+        </div>
+        <ul class="topic-list">
+            <li class="topic-item">
+                <div class="checkbox-wrapper"><input type="checkbox" id="t7" onchange="updateProgress()"></div>
+                <div class="topic-content">
+                    <label for="t7" class="topic-name">Basic Concepts</label>
+                    <div class="sub-topics">Combination vs Sequential Circuits</div>
+                </div>
+            </li>
+            <li class="topic-item">
+                <div class="checkbox-wrapper"><input type="checkbox" id="t8" onchange="updateProgress()"></div>
+                <div class="topic-content">
+                    <label for="t8" class="topic-name">Latches</label>
+                    <div class="sub-topics">NAND Latch, NOR Latch</div>
+                </div>
+            </li>
+            <li class="topic-item">
+                <div class="checkbox-wrapper"><input type="checkbox" id="t9" onchange="updateProgress()"></div>
+                <div class="topic-content">
+                    <label for="t9" class="topic-name">Flip-Flops</label>
+                    <div class="sub-topics">SR, D, JK, T Flip-Flops</div>
+                </div>
+            </li>
+            <li class="topic-item">
+                <div class="checkbox-wrapper"><input type="checkbox" id="t10" onchange="updateProgress()"></div>
+                <div class="topic-content">
+                    <label for="t10" class="topic-name">Registers</label>
+                    <div class="sub-topics">SISO (Serial In Serial Out), PIPO (Parallel In Parallel Out)</div>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="resource-note">
+        <strong>📚 Resource Reminder:</strong> Neso Academy (YouTube/Website)
+    </div>
+
+</div>
+
+<script>
+    // Load saved progress on page load
+    document.addEventListener('DOMContentLoaded', () => {
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(cb => {
+            const savedState = localStorage.getItem(cb.id);
+            if (savedState === 'true') {
+                cb.checked = true;
+            }
+        });
+        updateProgress();
+    });
+
+    // Save progress and update bar
+    function updateProgress() {
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        const total = checkboxes.length;
+        let checkedCount = 0;
+
+        checkboxes.forEach(cb => {
+            if (cb.checked) {
+                checkedCount++;
+                localStorage.setItem(cb.id, 'true');
+            } else {
+                localStorage.setItem(cb.id, 'false');
+            }
+        });
+
+        const percent = Math.round((checkedCount / total) * 100);
+        document.getElementById('progressBar').style.width = percent + '%';
+        document.getElementById('statsText').innerText = percent + '% Completed (' + checkedCount + '/' + total + ' topics)';
+    }
+</script>
+
+</body>
+</html>
